@@ -2,6 +2,7 @@
 process.env.NODE_ENV = 'test';
 // use zombie.js as headless browser
 var Browser = require('zombie');
+var assert  = require('assert');
 var http    = require('http');
 
 // get the application server module
@@ -20,7 +21,12 @@ describe('contact page', function() {
     this.browser.visit('/contact', done);
   });
 
-  it('should show contact a form');
+  it('should show contact a form', function() {
+    assert.ok(this.browser.success);
+    assert.equal(this.browser.text('h1'), 'Contact');
+    assert.equal(this.browser.text('form label'), 'First NameLast NameEmailMessage');
+  });
+
   it('should refuse empty submissions');
   it('should refuse partial submissions');
   it('should keep values on partial submissions');
