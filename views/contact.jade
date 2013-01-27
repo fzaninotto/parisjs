@@ -1,0 +1,23 @@
+extends layout
+
+block content
+
+  form.form-contact(method='post')
+    h1 Contact
+    fieldset
+
+        label First Name
+        input.input-xxlarge(type='text', name='first_name', required)
+
+        label Last Name
+        input.input-xxlarge(type='text', name='last_name', required)
+
+        label Email
+        input.input-xxlarge(type='email', name='email', required)
+
+        label Message
+        textarea.input-xxlarge(name='message', rows=5, required)
+
+        div
+            button.btn.btn-large.btn-primary(type='submit') Send
+

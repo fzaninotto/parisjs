@@ -4,10 +4,13 @@ var path    = require('path');
 
 var app = module.exports = express();
 
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
 app.use(app.router);
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/contact', function(req, res) {
-  res.send('contact');
+  res.render('contact', { });
 });
 
 if (!module.parent) {

@@ -8,7 +8,8 @@
   },
   "engineStrict": true,
   "dependencies": {
-    "express": "3.0.5"
+    "express": "3.0.5",
+    "jade": "*"
   },
   "devDependencies": {
     "zombie": "2.0.0-alpha11"
