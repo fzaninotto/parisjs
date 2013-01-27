@@ -2,9 +2,12 @@ extends layout
 
 block content
 
-  form.form-contact(method='post')
+  form.form-contact(method='post')(novalidate)
     h1 Contact
     fieldset
+
+        each error in errors
+            div.alert= error
 
         label First Name
         input.input-xxlarge(type='text', name='first_name', required)

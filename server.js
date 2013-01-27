@@ -6,11 +6,29 @@ var app = module.exports = express();
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
+app.use(express.bodyParser());
+app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.get('/contact', function(req, res) {
-  res.render('contact', { });
+  res.render('contact', { errors: [] });
+});
+
+app.post('/contact', function(req, res) {
+  var errors = [];
+  if (!req.body.first_name || !req.body.last_name || !req.body.email || !req.body.message) {
+    errors.push('Please fill in all the fields');
+  }
+  if (errors.length > 0) {
+    return res.render('contact', { errors: errors });
+  }
+
+  // send email
+  // ...
+
+  return res.redirect('/message_sent');
 });
 
 if (!module.parent) {

@@ -27,7 +27,15 @@ describe('contact page', function() {
     assert.equal(this.browser.text('form label'), 'First NameLast NameEmailMessage');
   });
 
-  it('should refuse empty submissions');
+  it('should refuse empty submissions', function(done) {
+    var browser = this.browser;
+    browser.pressButton('Send').then(function() {
+      assert.ok(browser.success);
+      assert.equal(browser.text('h1'), 'Contact');
+      assert.equal(browser.text('div.alert:eq(0)'), 'Please fill in all the fields');
+    }).then(done, done);
+  });
+
   it('should refuse partial submissions');
   it('should keep values on partial submissions');
   it('should refuse invalid emails');
