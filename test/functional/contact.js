@@ -17,7 +17,7 @@ describe('contact page', function() {
   });
 
   // load the contact page
-  before(function(done) {
+  beforeEach(function(done) {
     this.browser.visit('/contact', done);
   });
 
