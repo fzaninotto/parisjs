@@ -36,10 +36,48 @@ describe('contact page', function() {
     }).then(done, done);
   });
 
-  it('should refuse partial submissions');
-  it('should keep values on partial submissions');
-  it('should refuse invalid emails');
-  it('should accept complete submissions');
+  it('should refuse partial submissions', function(done) {
+    var browser = this.browser;
+    browser.fill('first_name', 'John');
+    browser.pressButton('Send').then(function() {
+      assert.ok(browser.success);
+      assert.equal(browser.text('h1'), 'Contact');
+      assert.equal(browser.text('div.alert:eq(0)'), 'Please fill in all the fields');
+    }).then(done, done);
+  });
+
+  it('should keep values on partial submissions', function(done) {
+    var browser = this.browser;
+    browser.fill('first_name', 'John');
+    browser.pressButton('Send').then(function() {
+      assert.equal(browser.field('first_name').value, 'John');
+    }).then(done, done);
+  });
+
+  it('should refuse invalid emails', function(done) {
+    var browser = this.browser;
+    browser.fill('first_name', 'John');
+    browser.fill('last_name', 'Doe');
+    browser.fill('email', 'incorrect email');
+    browser.fill('message', 'Lorem ipsum');
+    browser.pressButton('Send').then(function() {
+      assert.ok(browser.success);
+      assert.equal(browser.text('h1'), 'Contact');
+      assert.equal(browser.text('div.alert:eq(0)'), 'Please check the email address format');
+    }).then(done, done);
+  });
+
+  it('should accept complete submissions', function(done) {
+    var browser = this.browser;
+    browser.fill('first_name', 'John');
+    browser.fill('last_name', 'Doe');
+    browser.fill('email', 'test@example.com');
+    browser.fill('message', 'Lorem ipsum');
+    browser.pressButton('Send').then(function() {
+      assert.ok(browser.success);
+      assert.equal(browser.text('h1'), 'Message sent');
+    }).then(done, done);
+  });
 
   after(function(done) {
     this.server.close(done);

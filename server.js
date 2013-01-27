@@ -13,22 +13,42 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/contact', function(req, res) {
-  res.render('contact', { errors: [] });
+  var options = {
+    first_name: '',
+    last_name: '',
+    email: '',
+    message: '',
+    errors: []
+  };
+  res.render('contact', options);
 });
 
 app.post('/contact', function(req, res) {
-  var errors = [];
-  if (!req.body.first_name || !req.body.last_name || !req.body.email || !req.body.message) {
-    errors.push('Please fill in all the fields');
+  var options = {
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    email: req.body.email,
+    message: req.body.message,
+    errors: []
+  };
+  if (!options.first_name || !options.last_name || !options.email || !options.message) {
+    options.errors.push('Please fill in all the fields');
   }
-  if (errors.length > 0) {
-    return res.render('contact', { errors: errors });
+  if (!/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(options.email)) {
+    options.errors.push('Please check the email address format');
+  }
+  if (options.errors.length > 0) {
+    return res.render('contact', options);
   }
 
   // send email
   // ...
 
   return res.redirect('/message_sent');
+});
+
+app.get('/message_sent', function(req, res) {
+  res.render('message_sent');
 });
 
 if (!module.parent) {

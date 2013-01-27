@@ -10,16 +10,17 @@ block content
             div.alert= error
 
         label First Name
-        input.input-xxlarge(type='text', name='first_name', required)
+        input.input-xxlarge(type='text', value=first_name, name='first_name', required)
 
         label Last Name
-        input.input-xxlarge(type='text', name='last_name', required)
+        input.input-xxlarge(type='text', value=last_name, name='last_name', required)
 
         label Email
-        input.input-xxlarge(type='email', name='email', required)
+        input.input-xxlarge(type='email', value=email, name='email', required)
 
         label Message
         textarea.input-xxlarge(name='message', rows=5, required)
+            =message
 
         div
             button.btn.btn-large.btn-primary(type='submit') Send
